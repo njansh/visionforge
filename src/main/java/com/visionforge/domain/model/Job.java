@@ -1,6 +1,7 @@
 package com.visionforge.domain.model;
 
 import com.visionforge.domain.enums.JobStatus;
+import com.visionforge.domain.exception.InvalidJobStateTransitionException;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -27,4 +28,28 @@ public class Job {
     public Instant getCreatedAt() { return createdAt; }
     public Instant getFinishedAt() { return finishedAt; }
     public String getFailureReason() { return failureReason; }
+
+    public void start() {
+        if (this.status != JobStatus.CREATED) {
+            throw new InvalidJobStateTransitionException(this.status, JobStatus.RUNNING);
+        }
+        this.status = JobStatus.RUNNING;
+    }
+
+    public void complete() {
+        if (this.status != JobStatus.RUNNING) {
+            throw new InvalidJobStateTransitionException(this.status, JobStatus.DONE);
+        }
+        this.status = JobStatus.DONE;
+        this.finishedAt = Instant.now();
+    }
+
+    public void fail(String reason) {
+        if (this.status != JobStatus.RUNNING) {
+            throw new InvalidJobStateTransitionException(this.status, JobStatus.FAILED);
+        }
+        this.status = JobStatus.FAILED;
+        this.failureReason = reason;
+        this.finishedAt = Instant.now();
+    }
 }
