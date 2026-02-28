@@ -4,6 +4,6 @@ import com.visionforge.domain.enums.JobStatus;
 
 public class InvalidJobStateTransitionException extends RuntimeException {
     public InvalidJobStateTransitionException(JobStatus currentStatus, JobStatus targetStatus) {
-        super(String.format("Não é possível transitar do estado %s para %s", currentStatus, targetStatus));
+        super(String.format("Cannot transition from state %s to %s", currentStatus, targetStatus));
     }
 }
