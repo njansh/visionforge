@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2e85850-aaaf-4257-8bd6-058aa5d23132" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/visionforge/application/usecase/CompleteJobUseCase.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/visionforge/application/usecase/CreateJobUseCase.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/visionforge/application/usecase/FailJobUseCase.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/visionforge/application/usecase/StartJobUseCase.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/visionforge/domain/repository/JobRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="d2e85850-aaaf-4257-8bd6-058aa5d23132" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -69,7 +62,7 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.VisionforgeApplication.executor": "Run",
-    "git-widget-placeholder": "feat/job-application-use-cases",
+    "git-widget-placeholder": "feat/infrastructure-jpa",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Cliente/cursos/visionforge",
     "project.structure.last.edited": "Project",

@@ -18,6 +18,12 @@ public class Job {
         this.status = status;
         this.createdAt = createdAt;
     }
+    public static Job reconstruct(UUID id, JobStatus status, Instant createdAt, Instant finishedAt, String failureReason) {
+        Job job = new Job(id, status, createdAt);
+        job.finishedAt = finishedAt;
+        job.failureReason = failureReason;
+        return job;
+    }
 
     public static Job create() {
         return new Job(UUID.randomUUID(), JobStatus.CREATED, Instant.now());
@@ -60,3 +66,4 @@ public class Job {
     public Instant getFinishedAt() { return finishedAt; }
     public String getFailureReason() { return failureReason; }
 }
+
