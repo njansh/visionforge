@@ -23,11 +23,6 @@ public class Job {
         return new Job(UUID.randomUUID(), JobStatus.CREATED, Instant.now());
     }
 
-    public UUID getId() { return id; }
-    public JobStatus getStatus() { return status; }
-    public Instant getCreatedAt() { return createdAt; }
-    public Instant getFinishedAt() { return finishedAt; }
-    public String getFailureReason() { return failureReason; }
 
     public void start() {
         if (this.status != JobStatus.CREATED) {
@@ -44,12 +39,24 @@ public class Job {
         this.finishedAt = Instant.now();
     }
 
+
     public void fail(String reason) {
-        if (this.status != JobStatus.RUNNING) {
+        if (this.status != JobStatus.CREATED && this.status != JobStatus.RUNNING) {
             throw new InvalidJobStateTransitionException(this.status, JobStatus.FAILED);
         }
+
+        if (reason == null || reason.isBlank()) {
+            throw new InvalidJobStateTransitionException(this.status, JobStatus.FAILED);
+        }
+
         this.status = JobStatus.FAILED;
         this.failureReason = reason;
         this.finishedAt = Instant.now();
     }
+
+    public UUID getId() { return id; }
+    public JobStatus getStatus() { return status; }
+    public Instant getCreatedAt() { return createdAt; }
+    public Instant getFinishedAt() { return finishedAt; }
+    public String getFailureReason() { return failureReason; }
 }
