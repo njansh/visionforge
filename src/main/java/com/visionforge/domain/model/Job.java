@@ -2,8 +2,6 @@ package com.visionforge.domain.model;
 
 import com.visionforge.domain.enums.JobStatus;
 import com.visionforge.domain.exception.InvalidJobStateTransitionException;
-import com.visionforge.infrastructure.persistence.entity.JobEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.Instant;
 import java.util.UUID;
