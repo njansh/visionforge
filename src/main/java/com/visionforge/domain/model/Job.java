@@ -2,6 +2,8 @@ package com.visionforge.domain.model;
 
 import com.visionforge.domain.enums.JobStatus;
 import com.visionforge.domain.exception.InvalidJobStateTransitionException;
+import com.visionforge.infrastructure.persistence.entity.JobEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -17,6 +19,12 @@ public class Job {
         this.id = id;
         this.status = status;
         this.createdAt = createdAt;
+    }
+    public static Job reconstruct(UUID id, JobStatus status, Instant createdAt, Instant finishedAt, String failureReason) {
+        Job job = new Job(id, status, createdAt);
+        job.finishedAt = finishedAt;
+        job.failureReason = failureReason;
+        return job;
     }
 
     public static Job create() {
@@ -60,3 +68,4 @@ public class Job {
     public Instant getFinishedAt() { return finishedAt; }
     public String getFailureReason() { return failureReason; }
 }
+
