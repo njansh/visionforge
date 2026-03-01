@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2e85850-aaaf-4257-8bd6-058aa5d23132" name="Changes" comment="" />
+    <list default="true" id="d2e85850-aaaf-4257-8bd6-058aa5d23132" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/visionforge/application/usecase/GetJobByIdUseCase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/visionforge/infrastructure/config/JobConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/visionforge/infrastructure/web/controller/JobController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/visionforge/infrastructure/web/dto/JobResponseDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/visionforge/infrastructure/web/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,8 +20,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
         <option value="Interface" />
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -62,7 +69,7 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.VisionforgeApplication.executor": "Run",
-    "git-widget-placeholder": "feat/infrastructure-jpa",
+    "git-widget-placeholder": "feat/web-api-controllers",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Cliente/cursos/visionforge",
     "project.structure.last.edited": "Project",
