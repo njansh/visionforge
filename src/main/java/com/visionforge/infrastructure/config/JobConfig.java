@@ -1,7 +1,6 @@
 package com.visionforge.infrastructure.config;
 
-import com.visionforge.application.usecase.CreateJobUseCase;
-import com.visionforge.application.usecase.GetJobByIdUseCase;
+import com.visionforge.application.usecase.*;
 import com.visionforge.domain.repository.JobRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,4 +16,20 @@ public class JobConfig {
     public GetJobByIdUseCase getJobByIdUseCase(JobRepository jobRepository){
         return new GetJobByIdUseCase(jobRepository);
     }
+
+    @Bean
+    public StartJobUseCase startJobUseCase(JobRepository jobRepository) {
+        return new StartJobUseCase(jobRepository);
+    }
+
+    @Bean
+    public CompleteJobUseCase completeJobUseCase(JobRepository jobRepository) {
+        return new CompleteJobUseCase(jobRepository);
+    }
+
+    @Bean
+    public FailJobUseCase failJobUseCase(JobRepository jobRepository) {
+        return new FailJobUseCase(jobRepository);
+    }
+
 }
