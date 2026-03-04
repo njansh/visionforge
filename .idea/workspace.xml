@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d2e85850-aaaf-4257-8bd6-058aa5d23132" name="Changes" comment="test">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/visionforge/infrastructure/config/JobConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/visionforge/infrastructure/config/JobConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/visionforge/infrastructure/web/controller/JobController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/visionforge/infrastructure/web/controller/JobController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/visionforge/infrastructure/web/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/visionforge/infrastructure/web/exception/GlobalExceptionHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

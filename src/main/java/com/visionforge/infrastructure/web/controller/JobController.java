@@ -1,8 +1,6 @@
 package com.visionforge.infrastructure.web.controller;
 
-import com.visionforge.application.usecase.CreateJobUseCase;
-import com.visionforge.application.usecase.GetJobByIdUseCase;
-import com.visionforge.application.usecase.StartJobUseCase;
+import com.visionforge.application.usecase.*;
 import com.visionforge.domain.model.Job;
 import com.visionforge.infrastructure.web.dto.JobResponseDTO;
 import org.springframework.http.HttpStatus;
@@ -18,11 +16,16 @@ public class JobController {
     private final CreateJobUseCase createJobUseCase;
     private final GetJobByIdUseCase getJobByIdUseCase;
     private final StartJobUseCase startJobUseCase;
+    private final CompleteJobUseCase completeJobUseCase;
+    private final FailJobUseCase failJobUseCase;
 
-    public JobController(CreateJobUseCase createJobUseCase, GetJobByIdUseCase getJobByIdUseCase, StartJobUseCase startJobUseCase) {
+
+    public JobController(CreateJobUseCase createJobUseCase, GetJobByIdUseCase getJobByIdUseCase, StartJobUseCase startJobUseCase, CompleteJobUseCase completeJobUseCase, FailJobUseCase failJobUseCase) {
         this.createJobUseCase = createJobUseCase;
         this.getJobByIdUseCase = getJobByIdUseCase;
         this.startJobUseCase = startJobUseCase;
+        this.completeJobUseCase = completeJobUseCase;
+        this.failJobUseCase = failJobUseCase;
     }
 
     @PostMapping
@@ -47,4 +50,21 @@ public class JobController {
         Job job = getJobByIdUseCase.execute(jobId);
         return ResponseEntity.ok(JobResponseDTO.fromDomain(job));
     }
+    @PatchMapping("/{jobId}/complete")
+    public ResponseEntity<JobResponseDTO> complete(@PathVariable UUID jobId) {
+        completeJobUseCase.execute(jobId);
+        Job job = getJobByIdUseCase.execute(jobId);
+        return ResponseEntity.ok(JobResponseDTO.fromDomain(job));
+    }
+    @PatchMapping("/{jobId}/fail")
+    public ResponseEntity<JobResponseDTO> fail(
+            @PathVariable UUID jobId,
+            @RequestBody String reason
+    ) {
+        failJobUseCase.execute(jobId, reason);
+        Job job = getJobByIdUseCase.execute(jobId);
+        return ResponseEntity.ok(JobResponseDTO.fromDomain(job));
+    }
+
+
 }
