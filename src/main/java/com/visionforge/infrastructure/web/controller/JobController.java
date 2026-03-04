@@ -2,6 +2,7 @@ package com.visionforge.infrastructure.web.controller;
 
 import com.visionforge.application.usecase.CreateJobUseCase;
 import com.visionforge.application.usecase.GetJobByIdUseCase;
+import com.visionforge.application.usecase.StartJobUseCase;
 import com.visionforge.domain.model.Job;
 import com.visionforge.infrastructure.web.dto.JobResponseDTO;
 import org.springframework.http.HttpStatus;
@@ -16,10 +17,12 @@ public class JobController {
 
     private final CreateJobUseCase createJobUseCase;
     private final GetJobByIdUseCase getJobByIdUseCase;
+    private final StartJobUseCase startJobUseCase;
 
-    public JobController(CreateJobUseCase createJobUseCase, GetJobByIdUseCase getJobByIdUseCase) {
+    public JobController(CreateJobUseCase createJobUseCase, GetJobByIdUseCase getJobByIdUseCase, StartJobUseCase startJobUseCase) {
         this.createJobUseCase = createJobUseCase;
         this.getJobByIdUseCase = getJobByIdUseCase;
+        this.startJobUseCase = startJobUseCase;
     }
 
     @PostMapping
@@ -37,5 +40,11 @@ public class JobController {
         JobResponseDTO responseDTO = JobResponseDTO.fromDomain(job);
 
         return ResponseEntity.ok(responseDTO);
+    }
+    @PatchMapping("/{jobId}/start")
+    public ResponseEntity<JobResponseDTO> start(@PathVariable UUID jobId) {
+        startJobUseCase.execute(jobId);
+        Job job = getJobByIdUseCase.execute(jobId);
+        return ResponseEntity.ok(JobResponseDTO.fromDomain(job));
     }
 }
