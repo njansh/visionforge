@@ -1,5 +1,6 @@
 package com.visionforge.infrastructure.config;
 
+import com.visionforge.application.port.JobEventPublisher;
 import com.visionforge.application.usecase.*;
 import com.visionforge.domain.repository.JobRepository;
 import org.springframework.context.annotation.Bean;
@@ -9,8 +10,8 @@ import org.springframework.context.annotation.Configuration;
 public class JobConfig {
 
     @Bean
-    public CreateJobUseCase createJobUseCase(JobRepository jobRepository) {
-        return new CreateJobUseCase(jobRepository);
+    public CreateJobUseCase createJobUseCase(JobRepository jobRepository, JobEventPublisher eventPublisher) {
+        return new CreateJobUseCase(jobRepository, eventPublisher);
     }
     @Bean
     public GetJobByIdUseCase getJobByIdUseCase(JobRepository jobRepository){
