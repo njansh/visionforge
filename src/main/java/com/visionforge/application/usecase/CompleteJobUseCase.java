@@ -13,10 +13,10 @@ public class CompleteJobUseCase{
         this.jobRepository = jobRepository;
     }
 
-    public void execute(UUID jobId) {
+    public void execute(UUID jobId, String processedImagePath) {
         Job job = jobRepository.findById(jobId)
                 .orElseThrow(() -> new JobNotFoundException(jobId));
-        job.complete();
+        job.complete(processedImagePath);
         jobRepository.save(job);
     }
 }

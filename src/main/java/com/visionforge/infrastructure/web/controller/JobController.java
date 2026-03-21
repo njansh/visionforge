@@ -4,12 +4,17 @@ import com.visionforge.application.usecase.*;
 import com.visionforge.domain.model.Job;
 import com.visionforge.infrastructure.storage.LocalFileStorageService; // IMPORTANTE
 import com.visionforge.infrastructure.web.dto.JobResponseDTO;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType; // IMPORTANTE
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile; // IMPORTANTE
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.UUID;
 
 @RestController
@@ -69,7 +74,7 @@ public class JobController {
 
     @PatchMapping("/{jobId}/complete")
     public ResponseEntity<JobResponseDTO> complete(@PathVariable UUID jobId) {
-        completeJobUseCase.execute(jobId);
+        completeJobUseCase.execute(jobId,"");
         Job job = getJobByIdUseCase.execute(jobId);
         return ResponseEntity.ok(JobResponseDTO.fromDomain(job));
     }
@@ -82,5 +87,29 @@ public class JobController {
         failJobUseCase.execute(jobId, reason);
         Job job = getJobByIdUseCase.execute(jobId);
         return ResponseEntity.ok(JobResponseDTO.fromDomain(job));
+    }
+    @GetMapping("/{jobId}/image")
+    public ResponseEntity<Resource> downloadProcessedImage(@PathVariable UUID jobId) {
+
+        Job job = getJobByIdUseCase.execute(jobId);
+
+        if (!job.getStatus().name().equals("DONE")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        String processedImagePath = job.getProcessedImagePath();
+
+        try {
+            Path path = Paths.get(processedImagePath);
+            Resource resource = new UrlResource(path.toUri());
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.IMAGE_JPEG) //
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + path.getFileName().toString() + "\"")
+                    .body(resource);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

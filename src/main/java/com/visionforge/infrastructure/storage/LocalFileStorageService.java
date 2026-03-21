@@ -8,7 +8,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-
 @Service
 public class LocalFileStorageService {
 
@@ -18,7 +17,7 @@ public class LocalFileStorageService {
         try {
             Files.createDirectories(uploadDirectory);
         } catch (IOException e) {
-            throw new RuntimeException("Não foi possível criar a pasta de uploads", e);
+            throw new RuntimeException("Could not create upload directory", e);
         }
     }
 
@@ -30,7 +29,7 @@ public class LocalFileStorageService {
 
             return targetLocation.toString();
         } catch (IOException e) {
-            throw new RuntimeException("Erro ao guardar o ficheiro " + fileName, e);
+            throw new RuntimeException("Error saving file " + fileName, e);
         }
     }
 }

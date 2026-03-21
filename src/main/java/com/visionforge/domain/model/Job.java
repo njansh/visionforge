@@ -20,6 +20,7 @@ public class Job {
         this.status = status;
         this.createdAt = createdAt;
     }
+
     public static Job reconstruct(UUID id, JobStatus status, Instant createdAt, Instant finishedAt, String failureReason, String originalImagePath, String processedImagePath) {
         Job job = new Job(id, status, createdAt);
         job.finishedAt = finishedAt;
@@ -43,10 +44,11 @@ public class Job {
         this.status = JobStatus.RUNNING;
     }
 
-    public void complete() {
+    public void complete(String processedImagePath) {
         if (this.status != JobStatus.RUNNING) {
             throw new InvalidJobStateTransitionException(this.status, JobStatus.DONE);
         }
+        this.processedImagePath = processedImagePath;
         this.status = JobStatus.DONE;
         this.finishedAt = Instant.now();
     }
@@ -66,14 +68,40 @@ public class Job {
         this.finishedAt = Instant.now();
     }
 
-    public UUID getId() { return id; }
-    public JobStatus getStatus() { return status; }
-    public Instant getCreatedAt() { return createdAt; }
-    public Instant getFinishedAt() { return finishedAt; }
-    public String getFailureReason() { return failureReason; }
-    public String getOriginalImagePath() { return originalImagePath; }
-    public void setOriginalImagePath(String originalImagePath) { this.originalImagePath = originalImagePath; }
-    public String getProcessedImagePath() { return processedImagePath; }
-    public void setProcessedImagePath(String processedImagePath) { this.processedImagePath = processedImagePath; }
+    public UUID getId() {
+        return id;
+    }
+
+    public JobStatus getStatus() {
+        return status;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public Instant getFinishedAt() {
+        return finishedAt;
+    }
+
+    public String getFailureReason() {
+        return failureReason;
+    }
+
+    public String getOriginalImagePath() {
+        return originalImagePath;
+    }
+
+    public void setOriginalImagePath(String originalImagePath) {
+        this.originalImagePath = originalImagePath;
+    }
+
+    public String getProcessedImagePath() {
+        return processedImagePath;
+    }
+
+    public void setProcessedImagePath(String processedImagePath) {
+        this.processedImagePath = processedImagePath;
+    }
 }
 
