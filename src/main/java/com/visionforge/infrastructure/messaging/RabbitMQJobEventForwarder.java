@@ -28,6 +28,6 @@ public class RabbitMQJobEventForwarder {
                 message
         );
 
-        System.out.println("[Event Forwarder] Evento capturado! ID enviado para o RabbitMQ: " + message);
+        System.out.println("[Event Forwarder] Event captured! ID sent to RabbitMQ: " + message);
     }
 }
