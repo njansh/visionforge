@@ -14,14 +14,14 @@ public class CreateJobUseCase {
         this.eventPublisher = eventPublisher;
     }
 
-    public Job execute() {
-        Job job = Job.create();
+    public Job execute(String originalImagePath) {
+
+        Job job = Job.create(originalImagePath);
+
         Job savedJob = jobRepository.save(job);
 
         eventPublisher.publish(JobCreatedEvent.fromDomain(savedJob));
 
         return savedJob;
     }
-
 }
-

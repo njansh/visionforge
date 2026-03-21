@@ -2,11 +2,7 @@ package com.visionforge.infrastructure.persistence.entity;
 
 import com.visionforge.domain.enums.JobStatus;
 import com.visionforge.domain.model.Job;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -16,9 +12,13 @@ import java.util.UUID;
 public class JobEntity {
     @Id
     private UUID id;
-
     @Enumerated(EnumType.STRING)
     private JobStatus status;
+    @Column(name = "original_image_path")
+    private String originalImagePath;
+
+    @Column(name = "processed_image_path")
+    private String processedImagePath;
     private Instant createdAt;
     private Instant finishedAt;
     private String failureReason;
@@ -33,6 +33,8 @@ public class JobEntity {
         entity.setCreatedAt(job.getCreatedAt());
         entity.setFinishedAt(job.getFinishedAt());
         entity.setFailureReason(job.getFailureReason());
+        entity.setOriginalImagePath(job.getOriginalImagePath());
+        entity.setProcessedImagePath(job.getProcessedImagePath());
         return entity;
     }
 
@@ -42,7 +44,9 @@ public class JobEntity {
                 this.status,
                 this.createdAt,
                 this.finishedAt,
-                this.failureReason
+                this.failureReason,
+                this.originalImagePath,
+                this.processedImagePath
         );
     }
 
@@ -52,6 +56,22 @@ public class JobEntity {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public String getOriginalImagePath() {
+        return originalImagePath;
+    }
+
+    public void setOriginalImagePath(String originalImagePath) {
+        this.originalImagePath = originalImagePath;
+    }
+
+    public String getProcessedImagePath() {
+        return processedImagePath;
+    }
+
+    public void setProcessedImagePath(String processedImagePath) {
+        this.processedImagePath = processedImagePath;
     }
 
     public JobStatus getStatus() {
