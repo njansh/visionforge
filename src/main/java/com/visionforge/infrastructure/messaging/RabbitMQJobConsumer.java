@@ -36,6 +36,7 @@ public class RabbitMQJobConsumer {
 
         } catch (Exception e) {
             System.err.println("[Worker] ❌ Error processing Job " + message + ": " + e.getMessage());
+            throw new RuntimeException("Failure processing RabbitMQ event", e);
         }
     }
 }
