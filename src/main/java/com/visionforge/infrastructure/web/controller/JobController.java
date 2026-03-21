@@ -24,8 +24,7 @@ public class JobController {
     private final LocalFileStorageService storageService;
 
 
-    // CONSTRUTOR ATUALIZADO
-    public JobController(CreateJobUseCase createJobUseCase,
+        public JobController(CreateJobUseCase createJobUseCase,
                          GetJobByIdUseCase getJobByIdUseCase,
                          StartJobUseCase startJobUseCase,
                          CompleteJobUseCase completeJobUseCase,
