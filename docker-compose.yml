@@ -1,12 +1,17 @@
-version: '3.8'
-
 services:
   rabbitmq:
-    image: rabbitmq:3.12-management
+    image: rabbitmq:3-management
     container_name: visionforge-rabbitmq
     ports:
       - "5672:5672"
       - "15672:15672"
+
+  db:
+    image: postgres:15
+    container_name: visionforge-db
     environment:
-      - RABBITMQ_DEFAULT_USER=guest
-      - RABBITMQ_DEFAULT_PASS=guest
+      - POSTGRES_DB=visionforgedb
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
