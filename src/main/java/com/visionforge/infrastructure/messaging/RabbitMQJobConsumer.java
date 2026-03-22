@@ -13,6 +13,7 @@ import java.util.UUID;
 
 @Component
 public class RabbitMQJobConsumer {
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RabbitMQJobConsumer.class);
 
     private final StartJobUseCase startJobUseCase;
     private final CompleteJobUseCase completeJobUseCase;
@@ -35,23 +36,24 @@ public class RabbitMQJobConsumer {
     @RabbitListener(queues = "visionforge.job.created.queue")
     public void processJob(String jobIdStr) {
         UUID jobId = UUID.fromString(jobIdStr);
-        System.out.println("\n[Worker] 🚀 New message received from queue! Job ID: " + jobId);
+
+        log.info("\n[Worker] 🚀 New message received from queue! Job ID: " + jobId);
 
         try {
             startJobUseCase.execute(jobId);
-            System.out.println("[Worker] ⏳ Job " + jobId + " updated to RUNNING. Starting processing...");
+            log.info("[Worker] ⏳ Job " + jobId + " updated to RUNNING. Starting processing...");
 
             Job job = getJobByIdUseCase.execute(jobId);
             String originalImagePath = job.getOriginalImagePath();
 
             String processedImagePath = imageProcessingService.applyGrayscaleFilter(originalImagePath);
-            System.out.println("[Worker] 🎨 Filter applied successfully! New image saved at: " + processedImagePath);
+            log.info("[Worker] 🎨 Filter applied successfully! New image saved at: " + processedImagePath);
 
             completeJobUseCase.execute(jobId, processedImagePath);
-            System.out.println("[Worker] ✅ Processing completed! Job updated to DONE!\n");
+            log.info("[Worker] ✅ Processing completed! Job updated to DONE!\n");
 
         } catch (Exception e) {
-            System.err.println("[Worker] ❌ Error processing Job " + jobId + ": " + e.getMessage());
+            log.info("[Worker] ❌ Error processing Job " + jobId + ": " + e.getMessage());
             failJobUseCase.execute(jobId, e.getMessage());
         }
     }
