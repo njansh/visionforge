@@ -1,3 +1,4 @@
+
 # 🚀 VisionForge
 
 ### Distributed Asynchronous Image Processing Platform
@@ -6,175 +7,87 @@
 
 ## 🎯 Project Purpose
 
-**VisionForge** is a distributed backend platform designed to process
-images asynchronously and extract structured information using OCR and
-computer vision techniques.
+**VisionForge** is a distributed backend platform designed to process images asynchronously and extract structured information using computer vision techniques.
 
-This project was intentionally created as a **technical growth
-challenge**, aiming to push our backend engineering skills beyond our
-current level.
-
-It is not just a CRUD application --- it is an engineering-focused
-system built to simulate real-world backend architecture.
-
-------------------------------------------------------------------------
-
-## 🧠 Learning Goals
-
-This project is designed to force growth in:
-
--   Advanced Spring Boot
--   Layered Architecture
--   Clean Architecture (Hexagonal)
--   SOLID principles in practice
--   JPA / Hibernate
--   Asynchronous processing
--   Message-driven architecture (RabbitMQ)
--   Automated testing
--   JWT-based security
--   Observability and logging
--   Docker-based reproducible environments
+This project was created as a **technical growth challenge**, simulating real-world backend architecture to move beyond basic CRUD applications into the realm of distributed systems and clean engineering.
 
 ------------------------------------------------------------------------
 
 ## 🏗 High-Level Architecture
 
-Client\
-↓\
-REST API (Spring Boot)\
-↓\
-RabbitMQ (Message Broker)\
-↓\
-Worker (Image Processing - OpenCV/OCR)\
-↓\
-PostgreSQL
+Client  
+↓  
+**REST API** (Spring Boot)  
+↓  
+**RabbitMQ** (Message Broker)  
+↓  
+**Worker** (Image Processing Pipeline)  
+↓  
+**PostgreSQL** (Persistent Storage)
 
 ------------------------------------------------------------------------
 
-## 🔄 Execution Flow
+## 🔄 Execution Flow (Current Implementation)
 
-1.  User authenticates via JWT\
-2.  User uploads an image\
-3.  API creates a Job (status: CREATED)\
-4.  API publishes a message to RabbitMQ\
-5.  Worker consumes message and sets status to RUNNING\
-6.  Image processing pipeline executes\
-7.  Results are persisted\
-8.  Job is marked as DONE or FAILED\
-9.  User queries job status and results
+1.  **Job Creation**: User uploads an image via REST API.
+2.  **Persistence**: API creates a Job record in **PostgreSQL** with status `CREATED`.
+3.  **Event Publishing**: API publishes a message containing the `jobId` to **RabbitMQ**.
+4.  **Async Consumption**: Worker consumes the message and updates Job status to `RUNNING`.
+5.  **Image Processing**: Worker applies a native Grayscale filter to the image.
+6.  **Completion**: Job is updated to `DONE` with the path to the processed image.
+7.  **Query**: User checks job status and retrieves the processed result via API.
 
 ------------------------------------------------------------------------
 
 ## 📦 Tech Stack
 
--   Java 21\
--   Spring Boot\
--   Spring Security (JWT)\
--   JPA / Hibernate\
--   PostgreSQL\
--   RabbitMQ\
--   OpenCV / Tesseract / ONNX Runtime\
--   Docker\
--   JUnit 5\
--   Testcontainers\
--   GitHub Actions (CI)
-
-------------------------------------------------------------------------
-
-## 📂 Planned Package Structure
-
-com.visionforge
-
-├── api\
-│ ├── controller\
-│ ├── dto\
-│ └── exception\
-│\
-├── application\
-│ ├── usecase\
-│ └── service\
-│\
-├── domain\
-│ ├── model\
-│ ├── enums\
-│ └── repository\
-│\
-├── infrastructure\
-│ ├── persistence\
-│ ├── messaging\
-│ ├── security\
-│ └── vision
-
-------------------------------------------------------------------------
-
-## 🧩 Architectural Principles
-
--   Clear separation between domain and infrastructure\
--   Ports and Adapters (Hexagonal Architecture)\
--   Idempotent job processing\
--   Controlled retry strategy\
--   Explicit job state machine\
--   DTO isolation between layers\
--   Centralized exception handling
-
-------------------------------------------------------------------------
-
-## 🧪 Testing Strategy
-
--   Unit tests for domain logic (no Spring context)\
--   Repository integration tests with Testcontainers\
--   API tests using MockMvc\
--   Messaging integration tests\
--   CI pipeline executing full test suite
-
-------------------------------------------------------------------------
-
-## 🔐 Security
-
--   JWT-based authentication\
--   Resource-owner authorization model\
--   Secure password hashing\
--   Endpoint protection via Spring Security
+-   **Java 17** & **Spring Boot 3**
+-   **PostgreSQL**: Relational database for persistent job tracking
+-   **RabbitMQ**: Message broker for asynchronous task distribution
+-   **Docker & Docker Compose**: Orchestration of database and messaging services
+-   **JUnit 5**: Unit testing for core domain logic
+-   **SLF4J (Logback)**: Structured professional logging
+-   **Swagger (OpenAPI 3)**: API documentation and interactive testing
 
 ------------------------------------------------------------------------
 
 ## 📈 Technical Roadmap
 
-### Phase 1 --- Foundation
+### ✅ Phase 1 — Foundation (Completed)
+- [x] Multi-module project setup.
+- [x] Docker Compose orchestration (Postgres + RabbitMQ).
+- [x] Hexagonal Architecture (Clean Architecture) package structure.
 
--   Multi-module project setup\
--   Docker Compose (Postgres + RabbitMQ)\
--   Base architecture structure
+### ✅ Phase 2 — API & Persistence (Completed)
+- [x] Job entity and JPA persistence layer with **PostgreSQL**.
+- [x] REST API for image upload and status tracking.
 
-### Phase 2 --- API & Persistence
+### ✅ Phase 3 — Asynchronous Worker (Completed)
+- [x] Message publishing and consumption logic.
+- [x] Professional structured logging (SLF4J).
+- [x] Job state machine implementation (`CREATED` -> `RUNNING` -> `DONE`).
 
--   User and Job entities\
--   JWT authentication\
--   JPA persistence layer
+### 🚧 Phase 4 — Vision Pipeline (In Progress)
+- [x] **Native Grayscale Filter**: Implemented via Java AWT/ImageIO.
+- [ ] OpenCV & OCR (Tesseract) integration for text extraction.
+- [ ] Artifact storage (Moving from local to Cloud Storage).
 
-### Phase 3 --- Asynchronous Worker
+### 🚧 Phase 5 — Quality & Observability (In Progress)
+- [x] **Unit Testing**: 100% coverage of Job domain logic status transitions.
+- [ ] **Resiliency**: Implementation of Dead Letter Queues (DLQ) and Retry strategies.
+- [ ] **Idempotency**: Ensuring unique processing per message.
+- [ ] CI/CD Pipeline via GitHub Actions.
 
--   Message publishing and consumption\
--   Job state management\
--   Retry and failure handling
+------------------------------------------------------------------------
 
-### Phase 4 --- Vision Pipeline
+## 📂 Implementation Details (Clean Architecture)
 
--   OpenCV integration\
--   OCR implementation\
--   Artifact storage
-
-### Phase 5 --- Quality & Observability
-
--   Full automated test coverage\
--   Structured logging\
--   Metrics and monitoring\
--   CI pipeline stabilization
+-   **Domain**: Contains the `Job` entity, status enums, and repository interfaces. Logic is pure Java.
+-   **Application**: Use Cases orchestrate business flow (Start, Complete, Fail Job).
+-   **Infrastructure**: Implements external concerns like RabbitMQ consumers, JPA repositories, and Image processing services.
 
 ------------------------------------------------------------------------
 
 ## 📌 Project Status
 
-Early development stage.\
-Primary goal: structured technical growth through practical backend
-engineering.
+**Active Development - Feature Complete Core Pipeline.** The system currently supports the full lifecycle of an asynchronous job, from upload to persistent grayscale processing and retrieval.
